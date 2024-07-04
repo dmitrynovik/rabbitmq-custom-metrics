@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RabbitMQController {
 
-	private RabbitMQConfig rabbitMQConfig;
+	private final RabbitMQConfig rabbitMQConfig;
+	private final LokiConfig lokiConfig;
 
-	public RabbitMQController(RabbitMQConfig rabbitMQConfig) {
+	public RabbitMQController(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig) {
 		this.rabbitMQConfig = rabbitMQConfig;
+		this.lokiConfig = lokiConfig;
 
 	}
 

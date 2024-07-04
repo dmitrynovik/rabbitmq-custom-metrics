@@ -6,29 +6,33 @@ metadata:
     meta.helm.sh/release-namespace: grafana
   creationTimestamp: "2024-06-05T00:47:34Z"
   labels:
-    app.kubernetes.io/component: gateway
     app.kubernetes.io/instance: loki
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: loki
     app.kubernetes.io/version: 3.0.0
     helm.sh/chart: loki-6.6.2
-  name: loki-gateway
+  name: loki
   namespace: grafana
+  uid: 610d17e5-8aaa-4e81-8be4-1e9134805873
 spec:
-  clusterIP: 10.96.10.255
+  clusterIP: 10.96.10.11
   clusterIPs:
-  - 10.96.10.255
+  - 10.96.10.11
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack
   ports:
   - name: http-metrics
-    port: 80
+    port: 3100
     protocol: TCP
     targetPort: http-metrics
+  - name: grpc
+    port: 9095
+    protocol: TCP
+    targetPort: grpc
   selector:
-    app.kubernetes.io/component: gateway
+    app.kubernetes.io/component: single-binary
     app.kubernetes.io/instance: loki
     app.kubernetes.io/name: loki
   sessionAffinity: None
