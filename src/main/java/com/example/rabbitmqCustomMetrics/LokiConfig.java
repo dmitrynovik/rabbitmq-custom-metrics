@@ -12,6 +12,6 @@ public class LokiConfig {
     private String schema = "http";
 
     public String getConnectionString() {
-        return schema + "://" + userName + ":" + password + "@" + host + ":" + port;
+        return schema + "://" + userName + ":" + password + "@" + host + ":" + port + "/loki/api/v1/push";
     }
 }

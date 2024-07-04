@@ -12,7 +12,6 @@ public class RabbitMQController {
 	public RabbitMQController(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig) {
 		this.rabbitMQConfig = rabbitMQConfig;
 		this.lokiConfig = lokiConfig;
-
 	}
 
 	@GetMapping("/queue-size-limits")
