@@ -1,4 +1,4 @@
-package com.example.rabbitmqCustomMetrics;
+package com.example.rabbitmqCustomMetrics.config;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +13,10 @@ public class RabbitMQConfig {
     private String schema = "http";
     
     public String getConnectionString() {
-        return schema + "://" + userName + ":" + password + "@" + host + ":" + port;
+        return schema + "://" + host + ":" + port;
+        //return schema + "://" + userName + ":" + password + "@" + host + ":" + port;
     }
+
+    public String getUserName() { return userName; }
+    public String getPassword() { return password; }
 }

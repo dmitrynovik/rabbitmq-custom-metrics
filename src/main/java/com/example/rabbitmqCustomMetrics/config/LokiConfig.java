@@ -1,4 +1,4 @@
-package com.example.rabbitmqCustomMetrics;
+package com.example.rabbitmqCustomMetrics.config;
 
 import java.util.*;
 import org.springframework.context.annotation.Configuration;
