@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration(proxyBeanMethods = false)
 public class RabbitMQConfig {
+    
     // TODO: read from configuration
     private String userName = "admin";
     private String password = "admin"; 
