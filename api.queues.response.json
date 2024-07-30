@@ -1,0 +1,62 @@
+[
+    {
+        "arguments": {},
+        "auto_delete": false,
+        "consumer_capacity": 0,
+        "consumer_utilisation": 0,
+        "consumers": 0,
+        "durable": true,
+        "effective_policy_definition": {
+            "remote-dc-replicate": true
+        },
+        "exclusive": false,
+        "exclusive_consumer_tag": null,
+        "garbage_collection": {
+            "fullsweep_after": 65535,
+            "max_heap_size": 0,
+            "min_bin_vheap_size": 46422,
+            "min_heap_size": 233,
+            "minor_gcs": 93
+        },
+        "head_message_timestamp": null,
+        "idle_since": "2024-07-30T06:27:04.126+00:00",
+        "memory": 11896,
+        "message_bytes": 0,
+        "message_bytes_paged_out": 0,
+        "message_bytes_persistent": 0,
+        "message_bytes_ram": 0,
+        "message_bytes_ready": 0,
+        "message_bytes_unacknowledged": 0,
+        "messages": 0,
+        "messages_details": {
+            "rate": 0.0
+        },
+        "messages_paged_out": 0,
+        "messages_persistent": 0,
+        "messages_ram": 0,
+        "messages_ready": 0,
+        "messages_ready_details": {
+            "rate": 0.0
+        },
+        "messages_ready_ram": 0,
+        "messages_unacknowledged": 0,
+        "messages_unacknowledged_details": {
+            "rate": 0.0
+        },
+        "messages_unacknowledged_ram": 0,
+        "name": "BAR",
+        "node": "rabbit@rabbitmq-1-upstream-server-0.rabbitmq-1-upstream-nodes.rabbitmq-system",
+        "operator_policy": "replicate-root-vhost",
+        "policy": null,
+        "recoverable_slaves": null,
+        "reductions": 70373,
+        "reductions_details": {
+            "rate": 0.0
+        },
+        "single_active_consumer_tag": null,
+        "state": "running",
+        "storage_version": 1,
+        "type": "classic",
+        "vhost": "/"
+    }
+]
