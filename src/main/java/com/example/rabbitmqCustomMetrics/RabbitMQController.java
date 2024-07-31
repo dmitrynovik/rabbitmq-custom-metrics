@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.rabbitmqCustomMetrics.config.LokiConfig;
 import com.example.rabbitmqCustomMetrics.config.RabbitMQConfig;
+import com.example.rabbitmqCustomMetrics.services.LokiService;
 import com.example.rabbitmqCustomMetrics.services.RabbitMQService;
 
 import java.io.IOException;
@@ -33,13 +34,18 @@ public class RabbitMQController {
 	private RestTemplate restTemplate;
 	private HttpClient httpClient;
 	private RabbitMQService rabbitMQService;
+	private Logger lokiLogger;
 
-	public RabbitMQController(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig, RestTemplate restTemplate, RabbitMQService rabbitMQService) {
+	public RabbitMQController(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig, RestTemplate restTemplate, 
+		RabbitMQService rabbitMQService, LokiService lokiService) {
+			
 		this.rabbitMQConfig = rabbitMQConfig;
 		this.lokiConfig = lokiConfig;
 		this.restTemplate = restTemplate;
 		this.rabbitMQService = rabbitMQService;
 		this.httpClient = HttpClient.newHttpClient();
+
+		this.lokiLogger = lokiService.createLokiLogger(lokiConfig);
 	}
 
 	@GetMapping("/")
@@ -53,11 +59,11 @@ public class RabbitMQController {
 			.header("Authorization", getBasicAuthenticationHeader())
 			.build();
 
-
 		HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 		String payload = response.body();
-		log.info(payload);
+		//log.info(payload);
 		rabbitMQService.readJson(payload);
+		lokiLogger.info("0");
 		return payload;
 		//ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
 		//return response.getBody();
