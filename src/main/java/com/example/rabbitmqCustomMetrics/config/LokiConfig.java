@@ -27,4 +27,8 @@ public class LokiConfig {
     public String getTenantId() {
         return tenant;
     }
+
+    public String getServiceName() {
+        return "rabbitmq-queue-limits";
+    }
 }

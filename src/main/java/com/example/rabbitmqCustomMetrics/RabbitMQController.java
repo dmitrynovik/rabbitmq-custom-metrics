@@ -64,6 +64,7 @@ public class RabbitMQController {
 		//log.info(payload);
 		rabbitMQService.readJson(payload);
 		lokiLogger.info("-1");
+		
 		return payload;
 		//ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
 		//return response.getBody();
