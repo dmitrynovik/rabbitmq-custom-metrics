@@ -21,9 +21,12 @@ public class LokiService {
         Loki4jAppender lokiAppender = new Loki4jAppender();
         JavaHttpSender httpSender = new JavaHttpSender();
         httpSender.setUrl(lokiConfig.getConnectionString());
+        httpSender.setTenantId(lokiConfig.getTenantId());
 
         lokiAppender.setContext(ctx);
         lokiAppender.setHttp(httpSender);
+        lokiAppender.setBatchMaxItems(1);
+        lokiAppender.start();
 
         Logger logger = (Logger) LoggerFactory.getLogger("LOKI");
         logger.addAppender(lokiAppender);

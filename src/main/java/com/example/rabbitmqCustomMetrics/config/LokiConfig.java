@@ -23,4 +23,8 @@ public class LokiConfig {
     public Map<String, String> getHeaders() {
         return headers;
     }
+
+    public String getTenantId() {
+        return tenant;
+    }
 }
