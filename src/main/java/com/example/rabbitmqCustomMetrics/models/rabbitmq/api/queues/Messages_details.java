@@ -1,4 +1,4 @@
-package com.example.rabbitmqCustomMetrics.models;
+package com.example.rabbitmqCustomMetrics.models.rabbitmq.api.queues;
 
 public class Messages_details {
     private float rate;

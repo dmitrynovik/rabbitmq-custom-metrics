@@ -2,7 +2,7 @@ package com.example.rabbitmqCustomMetrics.services;
 
 import org.springframework.stereotype.Service;
 
-import com.example.rabbitmqCustomMetrics.models.QueueResponse;
+import com.example.rabbitmqCustomMetrics.models.rabbitmq.api.queues.QueueResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;

@@ -1,6 +1,6 @@
-package com.example.rabbitmqCustomMetrics.models;
+package com.example.rabbitmqCustomMetrics.models.rabbitmq.api.queues;
 
-public class Messages_ready_details {
+public class Reductions_details {
     private float rate;
   
   
