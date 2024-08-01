@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class LokiConfig {
     
     // TODO: read from configuration
-    private String host = "172.18.255.206";
+    private String host = "172.18.255.205";
     private int port = 3100;
     private String schema = "http";
     private String tenant = "myorg";
