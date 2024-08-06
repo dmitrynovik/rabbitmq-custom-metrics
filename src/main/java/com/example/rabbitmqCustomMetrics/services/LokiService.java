@@ -37,4 +37,8 @@ public class LokiService {
         logger.setAdditive(false);
         return logger;
     }
+
+    public String getQueueUtilisationLogFmt(String vhost, String queueName, float utilisation) {
+        return String.format("vhost=\"%s\" queue=\"%s\" utilize=%f", vhost, queueName, utilisation);
+    }
 }

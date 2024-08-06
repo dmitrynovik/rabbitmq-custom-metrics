@@ -18,8 +18,4 @@ public class RabbitMQService {
     public QueueResponse[] readJson(String payload) throws JsonMappingException, JsonProcessingException, IOException {
         return mapper.readValue(payload, QueueResponse[].class);
     }
-
-    public String getQueueUtilisationLogfmt(String vhost, String queueName, float utilisation) {
-        return String.format("vhost=\"%s\" queue=\"%s\" utilize=%f", vhost, queueName, utilisation);
-    }
 }

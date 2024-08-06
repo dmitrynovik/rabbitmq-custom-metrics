@@ -35,6 +35,7 @@ public class RabbitMQController {
 	private HttpClient httpClient;
 	private RabbitMQService rabbitMQService;
 	private Logger lokiLogger;
+	private LokiService lokiService;
 
 	public RabbitMQController(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig, RestTemplate restTemplate, 
 		RabbitMQService rabbitMQService, LokiService lokiService) {
@@ -43,6 +44,7 @@ public class RabbitMQController {
 		this.lokiConfig = lokiConfig;
 		this.restTemplate = restTemplate;
 		this.rabbitMQService = rabbitMQService;
+		this.lokiService = lokiService;
 		this.httpClient = HttpClient.newHttpClient();
 
 		this.lokiLogger = lokiService.createLokiLogger(lokiConfig);
@@ -63,7 +65,7 @@ public class RabbitMQController {
 		String payload = response.body();
 		//log.info(payload);
 		rabbitMQService.readJson(payload);
-		lokiLogger.info(rabbitMQService.getQueueUtilisationLogfmt("/", "NONAME", 0));
+		lokiLogger.info(lokiService.getQueueUtilisationLogFmt("/", "NONAME", 0));
 		
 		return payload;
 		//ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
