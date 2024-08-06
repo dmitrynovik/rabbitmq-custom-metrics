@@ -1,16 +1,12 @@
 package com.example.rabbitmqCustomMetrics.services;
 
-import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.example.rabbitmqCustomMetrics.config.LokiConfig;
-import com.github.loki4j.logback.HttpSender;
 import com.github.loki4j.logback.JavaHttpSender;
 import com.github.loki4j.logback.JsonEncoder;
 import com.github.loki4j.logback.Loki4jAppender;
-import com.github.loki4j.logback.AbstractLoki4jEncoder.LabelCfg;
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;

@@ -63,7 +63,7 @@ public class RabbitMQController {
 		String payload = response.body();
 		//log.info(payload);
 		rabbitMQService.readJson(payload);
-		lokiLogger.info("-1");
+		lokiLogger.info(rabbitMQService.getQueueUtilisationLogfmt("/", "NONAME", 0));
 		
 		return payload;
 		//ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
