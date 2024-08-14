@@ -18,15 +18,15 @@ public class RabbitMQService {
     private final ObjectMapper mapper = new ObjectMapper()
         .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-    public MaxLenPolicyUtilisation[] readJson(String payload) throws JsonMappingException, JsonProcessingException, IOException {
+    public MaxLenPolicyUtilisation[] getQueueMaxLengthUtilization(String payload) throws JsonMappingException, JsonProcessingException, IOException {
         QueueResponse[] queues = mapper.readValue(payload, QueueResponse[].class);
 
         return Stream.of(queues)
-            .map(RabbitMQService::convert)
+            .map(RabbitMQService::convertToQueueMaxLengthUtilization)
             .toArray(MaxLenPolicyUtilisation[]::new);
     }
 
-    public static MaxLenPolicyUtilisation convert(QueueResponse queue) {
+    public static MaxLenPolicyUtilisation convertToQueueMaxLengthUtilization(QueueResponse queue) {
         Effective_policy_definition policy = queue.getEffective_policy_definition();
         float utilisation = 0;
 
@@ -45,6 +45,6 @@ public class RabbitMQService {
             }
         }
 
-        return new MaxLenPolicyUtilisation(queue.getName(), utilisation);
+        return new MaxLenPolicyUtilisation(queue.getVhost(), queue.getName(), utilisation);
     }
 }
