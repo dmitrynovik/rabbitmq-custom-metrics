@@ -41,10 +41,18 @@ public class QueueResponse {
     private float storage_version;
     private String type;
     private String vhost;
-  
+    private Effective_policy_definition effective_policy_definition;
   
    // Getter Methods 
   
+    public Effective_policy_definition getEffective_policy_definition() {
+      return effective_policy_definition;
+    }
+
+    public void setEffective_policy_definition(Effective_policy_definition effective_policy_definition) {
+      this.effective_policy_definition = effective_policy_definition;
+    }
+
     public boolean getAuto_delete() {
       return auto_delete;
     }

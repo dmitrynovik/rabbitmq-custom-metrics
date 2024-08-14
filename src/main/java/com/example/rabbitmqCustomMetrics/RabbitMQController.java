@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.rabbitmqCustomMetrics.config.LokiConfig;
 import com.example.rabbitmqCustomMetrics.config.RabbitMQConfig;
+import com.example.rabbitmqCustomMetrics.models.rabbitmq.MaxLenPolicyUtilisation;
 import com.example.rabbitmqCustomMetrics.services.LokiService;
 import com.example.rabbitmqCustomMetrics.services.RabbitMQService;
 
@@ -51,7 +52,7 @@ public class RabbitMQController {
 	}
 
 	@GetMapping("/")
-	public String index() throws URISyntaxException, IOException, InterruptedException {
+	public MaxLenPolicyUtilisation[] index() throws URISyntaxException, IOException, InterruptedException {
 		final String uri = rabbitMQConfig.getConnectionString() + "/api/queues";
 		log.info("HTTP GET " + uri);
 
@@ -64,10 +65,10 @@ public class RabbitMQController {
 		HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 		String payload = response.body();
 		//log.info(payload);
-		rabbitMQService.readJson(payload);
+		MaxLenPolicyUtilisation[] utilisations = rabbitMQService.readJson(payload);
 		lokiLogger.info(lokiService.getQueueUtilisationLogFmt("/", "NONAME", 0));
 		
-		return payload;
+		return utilisations;
 		//ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
 		//return response.getBody();
 	}
