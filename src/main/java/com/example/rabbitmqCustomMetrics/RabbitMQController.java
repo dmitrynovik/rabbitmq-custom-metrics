@@ -29,8 +29,7 @@ public class RabbitMQController {
 	private LokiService lokiService;
 
 	public RabbitMQController(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig, RestTemplate restTemplate, 
-		RabbitMQService rabbitMQService, LokiService lokiService) {
-			
+		RabbitMQService rabbitMQService, LokiService lokiService) {	
 		this.rabbitMQConfig = rabbitMQConfig;
 		this.rabbitMQService = rabbitMQService;
 		this.lokiService = lokiService;
@@ -42,11 +41,7 @@ public class RabbitMQController {
 		final String uri = rabbitMQConfig.getConnectionString() + "/api/queues";
 		log.info("HTTP GET " + uri);
 
-		HttpRequest request = HttpRequest.newBuilder()
-			.GET()
-			.uri(new URI(uri))
-			.header("Authorization", getBasicAuthenticationHeader())
-			.build();
+		HttpRequest request = createHttpRequest(uri);
 
 		HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 		String payload = response.body();
@@ -54,6 +49,14 @@ public class RabbitMQController {
 		MaxLenPolicyUtilisation[] utilisations = rabbitMQService.getQueueMaxLengthUtilization(payload);
 		lokiService.logQueueUtilisationLogFmt(utilisations);
 		return utilisations;
+	}
+
+	private HttpRequest createHttpRequest(final String uri) throws URISyntaxException {
+		return HttpRequest.newBuilder()
+			.GET()
+			.uri(new URI(uri))
+			.header("Authorization", getBasicAuthenticationHeader())
+			.build();
 	}
 
 	private final String getBasicAuthenticationHeader() {
