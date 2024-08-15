@@ -2,6 +2,7 @@ package com.example.rabbitmqCustomMetrics.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,14 +25,34 @@ public class MetricsService {
 	private HttpClient httpClient;
 	private RabbitMQService rabbitMQService;
 	private LokiService lokiService;
+    private boolean polling;
 
 	public MetricsService(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig, RestTemplate restTemplate, 
-		RabbitMQService rabbitMQService, LokiService lokiService) {	
+		RabbitMQService rabbitMQService, LokiService lokiService) throws URISyntaxException, IOException, InterruptedException {	
 		this.rabbitMQConfig = rabbitMQConfig;
 		this.rabbitMQService = rabbitMQService;
 		this.lokiService = lokiService;
 		this.httpClient = HttpClient.newHttpClient();
+
+        this.startPoller();
 	}
+
+    public void startPoller() throws URISyntaxException, IOException, InterruptedException {
+        polling = true;
+        doPoll();
+    }
+
+    @Async
+    private void doPoll() throws URISyntaxException, IOException, InterruptedException {
+        while (polling) {
+            getQueueUtilizationMetrics();
+            Thread.sleep(10000); // TODO: config
+        }
+    }
+
+    public void stopPoller() {
+        polling = false;
+    }
 
 	public MaxLenPolicyUtilisation[] getQueueUtilizationMetrics() throws URISyntaxException, IOException, InterruptedException {
 		final String uri = rabbitMQConfig.getConnectionString() + "/api/queues";
