@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.rabbitmqCustomMetrics.RabbitMQController;
 import com.example.rabbitmqCustomMetrics.config.LokiConfig;
+import com.example.rabbitmqCustomMetrics.config.MetricsServiceConfig;
 import com.example.rabbitmqCustomMetrics.config.RabbitMQConfig;
 import com.example.rabbitmqCustomMetrics.models.rabbitmq.MaxLenPolicyUtilisation;
 
@@ -26,10 +27,12 @@ public class MetricsService {
 	private RabbitMQService rabbitMQService;
 	private LokiService lokiService;
     private boolean polling;
+    private MetricsServiceConfig metricsServiceConfig;
 
-	public MetricsService(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig, RestTemplate restTemplate, 
+	public MetricsService(RabbitMQConfig rabbitMQConfig, LokiConfig lokiConfig, MetricsServiceConfig metricsServiceConfig, RestTemplate restTemplate, 
 		RabbitMQService rabbitMQService, LokiService lokiService) throws URISyntaxException, IOException, InterruptedException {	
 		this.rabbitMQConfig = rabbitMQConfig;
+        this.metricsServiceConfig = metricsServiceConfig;
 		this.rabbitMQService = rabbitMQService;
 		this.lokiService = lokiService;
 		this.httpClient = HttpClient.newHttpClient();
@@ -46,7 +49,7 @@ public class MetricsService {
     private void doPoll() throws URISyntaxException, IOException, InterruptedException {
         while (polling) {
             getQueueUtilizationMetrics();
-            Thread.sleep(10000); // TODO: config
+            Thread.sleep(metricsServiceConfig.getSleepInterval());
         }
     }
 
