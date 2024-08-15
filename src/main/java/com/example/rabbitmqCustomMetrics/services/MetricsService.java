@@ -33,8 +33,8 @@ public class MetricsService {
 		this.rabbitMQService = rabbitMQService;
 		this.lokiService = lokiService;
 		this.httpClient = HttpClient.newHttpClient();
-
-        this.startPoller();
+        
+        startPoller();
 	}
 
     public void startPoller() throws URISyntaxException, IOException, InterruptedException {
