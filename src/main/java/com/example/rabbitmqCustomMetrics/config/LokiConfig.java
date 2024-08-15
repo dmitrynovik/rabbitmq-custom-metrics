@@ -1,24 +1,13 @@
 package com.example.rabbitmqCustomMetrics.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = "loki")
 public class LokiConfig {
-
-    // public LokiConfig(@Value("${loki.host}") String host, 
-    //     @Value("${loki.port}") int port, 
-    //     @Value("${loki.schema}") String schema, 
-    //     @Value("${loki.tenant}") String tenant) {
-    //     this.host = host;
-    //     this.port = port;
-    //     this.schema = schema;
-    //     this.tenant = tenant;
-    // }
     
-    private String host;// = "172.18.255.205";
+    private String host;
     
     public String getHost() {
         return host;
@@ -28,7 +17,7 @@ public class LokiConfig {
         this.host = host;
     }
 
-    private int port;// = 3100;
+    private int port;
     public int getPort() {
         return port;
     }
@@ -37,7 +26,7 @@ public class LokiConfig {
         this.port = port;
     }
 
-    private String schema;// = "http";
+    private String schema;
     public String getSchema() {
         return schema;
     }
@@ -46,7 +35,7 @@ public class LokiConfig {
         this.schema = schema;
     }
 
-    private String tenant;// = "myorg";
+    private String tenant;
 
     public String getTenant() {
         return tenant;
