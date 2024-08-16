@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.example.rabbitmqCustomMetrics.RabbitMQController;
 import com.example.rabbitmqCustomMetrics.config.RabbitMQConfig;
 import com.example.rabbitmqCustomMetrics.models.rabbitmq.MaxLenPolicyUtilisation;
 import com.example.rabbitmqCustomMetrics.models.rabbitmq.api.queues.Effective_policy_definition;
@@ -70,7 +69,7 @@ public class RabbitMQService {
         return new MaxLenPolicyUtilisation(queue.getVhost(), queue.getName(), utilisation);
     }
 
-    	public MaxLenPolicyUtilisation[] getQueueUtilizationMetrics() throws URISyntaxException, IOException, InterruptedException {
+    public MaxLenPolicyUtilisation[] getQueueUtilizationMetrics() throws URISyntaxException, IOException, InterruptedException {
 		final String uri = rabbitMQConfig.getConnectionString() + "/api/queues";
 		log.info("HTTP GET " + uri);
 
