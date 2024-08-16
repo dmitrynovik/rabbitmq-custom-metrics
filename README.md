@@ -6,6 +6,11 @@
 * Logs the metrics into [Grafana Loki](https://grafana.com/oss/loki/).
 * Shows a time series graph for each `vhost+queue` based on the above Loki data source.
 
+## Prerequisites
+* RabbitMQ
+* Grafana
+* Grafana Loki
+
 NOTE: this example can be used for any other custom metrics
 
 ![Architecture](/doc/architecture.png)
