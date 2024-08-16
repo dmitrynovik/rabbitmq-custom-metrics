@@ -143,6 +143,7 @@
         {
           "id": "calculateField",
           "options": {
+            "alias": "utilization",
             "binary": {
               "left": "utilize",
               "operator": "*",
@@ -151,6 +152,25 @@
             "mode": "binary",
             "reduce": {
               "reducer": "sum"
+            },
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Time",
+                "c",
+                "l",
+                "level",
+                "queue",
+                "service_name",
+                "t",
+                "vhost",
+                "utilization"
+              ]
             }
           }
         },
@@ -175,13 +195,13 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Queue Limits",
   "uid": "fdtyvvx67utj4d",
-  "version": 5,
+  "version": 7,
   "weekStart": ""
 }
