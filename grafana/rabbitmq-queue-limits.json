@@ -112,7 +112,7 @@
           "refId": "A"
         }
       ],
-      "title": "Panel Title",
+      "title": "RabbitMQ Queue Utliziation",
       "transformations": [
         {
           "id": "extractFields",
@@ -202,6 +202,6 @@
   "timezone": "browser",
   "title": "Queue Limits",
   "uid": "fdtyvvx67utj4d",
-  "version": 7,
+  "version": 8,
   "weekStart": ""
 }
