@@ -1,7 +1,11 @@
 package com.example.rabbitmqCustomMetrics.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.example.rabbitmqCustomMetrics.RabbitMQController;
+import com.example.rabbitmqCustomMetrics.config.RabbitMQConfig;
 import com.example.rabbitmqCustomMetrics.models.rabbitmq.MaxLenPolicyUtilisation;
 import com.example.rabbitmqCustomMetrics.models.rabbitmq.api.queues.Effective_policy_definition;
 import com.example.rabbitmqCustomMetrics.models.rabbitmq.api.queues.QueueResponse;
@@ -10,10 +14,28 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Base64;
 import java.util.stream.Stream;
 
 @Service
 public class RabbitMQService {
+
+    private final RabbitMQConfig rabbitMQConfig;
+    private final HttpClient httpClient;
+    private final LokiService lokiService;
+    private static final Logger log = LoggerFactory.getLogger(RabbitMQService.class);
+
+    public RabbitMQService(RabbitMQConfig rabbitMQConfig, LokiService lokiService) {
+        this.rabbitMQConfig = rabbitMQConfig;
+        this.httpClient = HttpClient.newHttpClient();
+        this.lokiService = lokiService;
+    }
 
     private final ObjectMapper mapper = new ObjectMapper()
         .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -47,4 +69,31 @@ public class RabbitMQService {
 
         return new MaxLenPolicyUtilisation(queue.getVhost(), queue.getName(), utilisation);
     }
+
+    	public MaxLenPolicyUtilisation[] getQueueUtilizationMetrics() throws URISyntaxException, IOException, InterruptedException {
+		final String uri = rabbitMQConfig.getConnectionString() + "/api/queues";
+		log.info("HTTP GET " + uri);
+
+		HttpRequest request = createHttpRequest(uri);
+
+		HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
+		String payload = response.body();
+		//log.info(payload);
+		MaxLenPolicyUtilisation[] utilisations = getQueueMaxLengthUtilization(payload);
+		lokiService.logQueueUtilisationLogFmt(utilisations);
+		return utilisations;
+	}
+
+	private HttpRequest createHttpRequest(final String uri) throws URISyntaxException {
+		return HttpRequest.newBuilder()
+			.GET()
+			.uri(new URI(uri))
+			.header("Authorization", getBasicAuthenticationHeader())
+			.build();
+	}
+
+	private final String getBasicAuthenticationHeader() {
+		String valueToEncode = rabbitMQConfig.getUserName() + ":" + rabbitMQConfig.getPassword();
+		return "Basic " + Base64.getEncoder().encodeToString(valueToEncode.getBytes());
+	}
 }
