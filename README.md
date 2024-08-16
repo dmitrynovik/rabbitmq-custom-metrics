@@ -8,5 +8,6 @@
 
 NOTE: this example can be used for any other custom metrics
 
-![architecture](/doc/architecture.png)
+![Architecture](/doc/architecture.png)
 
+![Grafana Dashboard](/doc/dashboard.png)
